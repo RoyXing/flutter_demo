@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/wanapp_demo/http/Api.dart';
 import 'package:flutter_demo/wanapp_demo/http/HttpUtil.dart';
+import 'package:flutter_demo/wanapp_demo/pages/ArticleDetailPage.dart';
 import 'package:flutter_demo/wanapp_demo/pages/LoginPage.dart';
 import 'package:flutter_demo/wanapp_demo/utils/DataUtils.dart';
+import 'package:flutter_demo/wanapp_demo/utils/StringUtils.dart';
 
 class ArticleItem extends StatefulWidget {
   //是否来自搜索列表
@@ -48,7 +50,6 @@ class ArticleItemState extends State<ArticleItem> {
             ),
           ],
         ),
-
         new Text(widget.itemData['niceDate']),
       ],
     );
@@ -57,7 +58,9 @@ class ArticleItemState extends State<ArticleItem> {
       children: <Widget>[
         new Expanded(
             child: new Text.rich(
-          new TextSpan(text: widget.itemData['title']),
+          widget.isSearch
+              ? StringUtils.getTextSpan(widget.itemData['title'], widget.id)
+              : new TextSpan(text: widget.itemData['title']),
           softWrap: true,
           style: new TextStyle(fontSize: 16.0, color: Colors.black),
           textAlign: TextAlign.left,
@@ -69,7 +72,7 @@ class ArticleItemState extends State<ArticleItem> {
       children: <Widget>[
         new Expanded(
             child: new Text(
-          widget.itemData['chapterName'],
+          widget.isSearch ? "" : widget.itemData['chapterName'],
           softWrap: true,
           style: new TextStyle(color: Theme.of(context).accentColor),
           textAlign: TextAlign.left,
@@ -126,7 +129,14 @@ class ArticleItemState extends State<ArticleItem> {
     });
   }
 
-  void _itemClick(itemData) {}
+  void _itemClick(itemData) async {
+    await Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new ArticleDetailPage(
+        title: itemData['title'],
+        url: itemData['link'],
+      );
+    }));
+  }
 
   void _login() {
     Navigator.of(context).push(new MaterialPageRoute(builder: (context) {

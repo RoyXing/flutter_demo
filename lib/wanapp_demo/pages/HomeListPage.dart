@@ -45,11 +45,9 @@ class HomeListPageState extends State<HomeListPage> {
     getBanner();
     getHomeArticlelist();
     Constants.eventBus.on<LogoutEvent>().listen((event) {
-      print('收到退出通知');
       onRefresh();
     });
     Constants.eventBus.on<LoginEvent>().listen((event) {
-      print('收到登录通知');
       onRefresh();
     });
   }

@@ -87,11 +87,13 @@ class HttpUtil {
       }
 
       Map<String, dynamic> map = json.decode(response.body);
+      print("body:" + map.toString());
+
       errorCode = map['errorCode'];
       errorMsg = map['errorMsg'];
       data = map['data'];
 
-      print(response.headers.toString());
+//      print(response.headers.toString());
       if (url.contains(Api.LOGIN) || url.contains(Api.REGISTER)) {
         SharedPreferences sp = await SharedPreferences.getInstance();
         sp.setString("cookie", response.headers['set-cookie']);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/wanapp_demo/constant/AppColors.dart';
 import 'package:flutter_demo/wanapp_demo/pages/HomeListPage.dart';
 import 'package:flutter_demo/wanapp_demo/pages/MyInfoPage.dart';
+import 'package:flutter_demo/wanapp_demo/pages/SearchPage.dart';
 import 'package:flutter_demo/wanapp_demo/pages/TreePage.dart';
 
 class WanAndroidApp extends StatefulWidget {
@@ -22,7 +23,11 @@ class WanAndroidAppState extends State<WanAndroidApp> {
 
   initData() {
     _body = new IndexedStack(
-      children: <Widget>[new HomeListPage(), new TreePage(), new MyInfoPage()],
+      children: <Widget>[
+        new HomeListPage(),
+        new TreePage(),
+        new MyInfoPage(),
+      ],
       index: _tabIndex,
     );
   }
@@ -31,7 +36,6 @@ class WanAndroidAppState extends State<WanAndroidApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _navigationViews = <BottomNavigationBarItem>[
@@ -65,7 +69,13 @@ class WanAndroidAppState extends State<WanAndroidApp> {
             style: new TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
-            new IconButton(icon: new Icon(Icons.search), onPressed: null),
+            new IconButton(
+                icon: new Icon(Icons.search),
+                onPressed: () {
+                  navigatorKey.currentState.push(new MaterialPageRoute(builder: (context){
+                    return SearchPage(null);
+                  }));
+                }),
           ],
         ),
         body: _body,
